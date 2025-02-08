@@ -5,7 +5,9 @@ http://localhost:3000/auth/login
 http://localhost:3001/users/create
 
 http://localhost:3001/users
+----------------------------------------------------
 
+run command : npm run dev
 
 -----------------------------------------------------------------
 

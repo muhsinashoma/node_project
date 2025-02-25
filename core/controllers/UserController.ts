@@ -1,31 +1,67 @@
+// import { Request, Response } from 'express';
+// import { UserModel, IUser } from '../models/User';
+
+
+
+// core/controllers/UserController.ts
 import { Request, Response } from 'express';
-import { UserModel, IUser } from '../models/User';
+import { IUser } from '../models/User';
+import { UserService } from '../services/UserService';
 
 export class UserController {
+   
+    // Get all users : previous
+    // static async getAll(req: Request, res: Response) {
+    //     try {
+    //         const users = await UserModel.findAll();
+    //         res.render('users/index', { users });
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to fetch users' });
+    //     }
+    // }
+
+
     // Get all users
     static async getAll(req: Request, res: Response) {
         try {
-            const users = await UserModel.findAll();
+            const users = await UserService.getAllUsers();
             res.render('users/index', { users });
         } catch (error) {
             res.status(500).render('error', { error: 'Failed to fetch users' });
         }
     }
 
+
+    // Show single user : previous
+    // static async show(req: Request, res: Response) {
+    //     try {
+    //         const id = parseInt(req.params.id);
+    //         const user = await UserModel.findById(id);
+    //         if (user) {
+    //             res.render('users/show', { user });
+    //         } else {
+    //             res.status(404).render('error', { error: 'User not found' });
+    //         }
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to fetch user' });
+    //     }
+    // }
+
     // Show single user
     static async show(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
-            const user = await UserModel.findById(id);
+            const user = await UserService.getUserById(id);
             if (user) {
                 res.render('users/show', { user });
             } else {
                 res.status(404).render('error', { error: 'User not found' });
             }
         } catch (error) {
-            res.status(500).render('error', { error: 'Failed to fetch user' });
+            res.status(500).render('error', { error: (error as Error).message || 'Failed to fetch user' });
         }
     }
+
 
     // Show create form
     static createForm(req: Request, res: Response) {
@@ -34,7 +70,23 @@ export class UserController {
 
     
     
-    // Create user                 //3rd start from here
+    // Create user : previous               //3rd start from here
+
+    // static async create(req: Request, res: Response) {
+    //     try {
+    //         const user: IUser = {
+    //             name: req.body.name,
+    //             email: req.body.email
+    //         };
+    //         await UserModel.create(user);
+    //         res.redirect('/users');
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to create user' });
+    //     }
+    // }
+
+
+    // Create user :  //3rd start from here
 
     static async create(req: Request, res: Response) {
         try {
@@ -42,18 +94,37 @@ export class UserController {
                 name: req.body.name,
                 email: req.body.email
             };
-            await UserModel.create(user);
+            await UserService.createUser(user);
             res.redirect('/users');
         } catch (error) {
-            res.status(500).render('error', { error: 'Failed to create user' });
+            res.status(400).render('users/create', {
+                error: (error as Error).message || 'Failed to create user',
+                form: req.body
+            });
         }
     }
 
-    // Show edit form
+
+    // Show edit form : previous
+    // static async editForm(req: Request, res: Response) {
+    //     try {
+    //         const id = parseInt(req.params.id);
+    //         const user = await UserModel.findById(id);
+    //         if (user) {
+    //             res.render('users/edit', { user });
+    //         } else {
+    //             res.status(404).render('error', { error: 'User not found' });
+    //         }
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to fetch user' });
+    //     }
+    // }
+
+
     static async editForm(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
-            const user = await UserModel.findById(id);
+            const user = await UserService.getUserById(id);
             if (user) {
                 res.render('users/edit', { user });
             } else {
@@ -64,7 +135,28 @@ export class UserController {
         }
     }
 
-    // Update user
+
+
+    // Update user : previous
+    // static async update(req: Request, res: Response) {
+    //     try {
+    //         const id = parseInt(req.params.id);
+    //         const user: IUser = {
+    //             name: req.body.name,
+    //             email: req.body.email
+    //         };
+    //         const success = await UserModel.update(id, user);
+    //         if (success) {
+    //             res.redirect('/users');
+    //         } else {
+    //             res.status(404).render('error', { error: 'User not found' });
+    //         }
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to update user' });
+    //     }
+    // }
+
+    // Update user : previous
     static async update(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
@@ -72,7 +164,7 @@ export class UserController {
                 name: req.body.name,
                 email: req.body.email
             };
-            const success = await UserModel.update(id, user);
+            const success = await UserService.updateUser(id, user);
             if (success) {
                 res.redirect('/users');
             } else {
@@ -83,14 +175,27 @@ export class UserController {
         }
     }
 
-    // Delete user
+    // Delete user : previous
+    // static async delete(req: Request, res: Response) {
+    //     try {
+    //         const id = parseInt(req.params.id);
+    //         await UserModel.delete(id);
+    //         res.redirect('/users');
+    //     } catch (error) {
+    //         res.status(500).render('error', { error: 'Failed to delete user' });
+    //     }
+    // }
+
+    // Delete user 
     static async delete(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
-            await UserModel.delete(id);
+            await UserService.deleteUser(id);
             res.redirect('/users');
         } catch (error) {
             res.status(500).render('error', { error: 'Failed to delete user' });
         }
     }
+
+
 }

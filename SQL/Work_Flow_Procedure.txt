@@ -5,11 +5,22 @@ http://localhost:3000/auth/login
 http://localhost:3001/users/create
 
 http://localhost:3001/users
-----------------------------------------------------
+-------------------------------------------------------------
 
 run command : npm run dev
+-------------------------------------------------------------
 
------------------------------------------------------------------
+
+Exiting project upload to github
+
+
+git add .
+
+git commit -m "Test Purpose"
+
+git push
+
+-------------------------------------------------------------
 
 Once running, you can access your routes at:
 

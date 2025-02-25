@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './core/routes/user.routes';
-//import userRoutes from './routes/user.routes';
+
 
 const app = express();
 
@@ -13,5 +13,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/users', userRoutes);    //1st start from here
+
+//app.use('', userRoutes);    //1st start from here
 
 export default app;

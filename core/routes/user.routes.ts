@@ -4,6 +4,9 @@ import { UserController } from '../controllers/UserController';
 const router = Router();
 
 router.get('/', UserController.getAll);
+
+
+// Show create form
 router.get('/create', UserController.createForm);
 
 

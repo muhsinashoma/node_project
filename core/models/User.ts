@@ -9,7 +9,9 @@ export interface IUser {
 
 export class UserModel {
     static async findAll(): Promise<IUser[]> {
-        const [rows] = await db.query('SELECT * FROM users');
+        //const [rows] = await db.query('SELECT * FROM users');
+
+        const [rows] = await db.query('SELECT * FROM users WHERE status=1 order by id desc');
         return rows as IUser[];
     }
 
@@ -38,8 +40,17 @@ export class UserModel {
         return (result as any).affectedRows > 0;
     }
 
+    // main
+
+    // static async delete(id: number): Promise<boolean> {
+    //     const [result] = await db.query('DELETE FROM users WHERE id = ?', [id]);
+    //     return (result as any).affectedRows > 0;
+    // }
+
+
     static async delete(id: number): Promise<boolean> {
-        const [result] = await db.query('DELETE FROM users WHERE id = ?', [id]);
+        const [result] = await db.query('UPDATE users SET status=0 WHERE id = ?', [id]);
         return (result as any).affectedRows > 0;
     }
+
 }

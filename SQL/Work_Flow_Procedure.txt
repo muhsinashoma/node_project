@@ -1,5 +1,11 @@
 http://localhost:3000/auth/login
 
+------------------------------------------------------------
+
+Quick HTTP tests:
+
+ http://localhost:3001/users  in browser.
+
 --------------------------------------------------------------
 
 http://localhost:3001/users/create
@@ -35,6 +41,8 @@ POST   http://localhost:3000/users/:id/delete # Delete user
 -----------------------------------------------------------------
 
 
+
+---------------------------------------------------------------
 
 
 1. app.ts : app.use('/users', userRoutes);                                            //1st start from here

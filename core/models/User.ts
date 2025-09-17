@@ -9,7 +9,6 @@ export interface IUser {
 
 export class UserModel {
     static async findAll(): Promise<IUser[]> {
-        //const [rows] = await db.query('SELECT * FROM users');
 
         const [rows] = await db.query('SELECT * FROM users WHERE status=1 order by id desc');
         return rows as IUser[];

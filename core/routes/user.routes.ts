@@ -3,7 +3,7 @@ import { UserController } from '../controllers/UserController';
 
 const router = Router();
 
-router.get('/', UserController.getAll);
+router.get('/', UserController.getAll);     //Cannot GET /users    step 1
 
 
 // Show create form

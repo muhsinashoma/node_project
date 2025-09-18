@@ -4,6 +4,9 @@ export interface IUser {
     id?: number;
     name: string;
     email: string;
+    age?: number;
+    class?:number;
+    section:string;
     created_at?: Date;
 }
 
@@ -22,11 +25,10 @@ export class UserModel {
 
 
     //4th step Start from here
-    
     static async create(user: IUser): Promise<number> {
         const [result] = await db.query(
-            'INSERT INTO users (name, email) VALUES (?, ?)',
-            [user.name, user.email]
+            'INSERT INTO users (name, email, age, class, section) VALUES (?, ? , ?, ?, ?)',
+            [user.name, user.email, user.age, user.class, user.section]
         );
         return (result as any).insertId;
     }
@@ -38,13 +40,6 @@ export class UserModel {
         );
         return (result as any).affectedRows > 0;
     }
-
-    // main
-
-    // static async delete(id: number): Promise<boolean> {
-    //     const [result] = await db.query('DELETE FROM users WHERE id = ?', [id]);
-    //     return (result as any).affectedRows > 0;
-    // }
 
 
     static async delete(id: number): Promise<boolean> {

@@ -48,7 +48,10 @@ export class UserController {
         try {
             const user: IUser = {
                 name: req.body.name,
-                email: req.body.email
+                email: req.body.email,
+                age: req.body.age,
+                class: req.body.class,
+                section: req.body.section
             };
             await UserService.createUser(user);
             res.redirect('/users');
@@ -85,7 +88,10 @@ export class UserController {
             const id = parseInt(req.params.id);
             const user: IUser = {
                 name: req.body.name,
-                email: req.body.email
+                email: req.body.email,
+                age: req.body.age,
+                class: req.body.class,
+                section: req.body.section
             };
             const success = await UserService.updateUser(id, user);
             if (success) {

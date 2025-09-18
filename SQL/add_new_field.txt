@@ -1,0 +1,136 @@
+UserController.ts
+
+
+    // Create user :  //3rd start from here
+
+    static async create(req: Request, res: Response) {
+        try {
+            const user: IUser = {
+                name: req.body.name,
+                email: req.body.email,
+                age: req.body.age,
+                class: req.body.class,
+                section: req.body.section
+            };
+            await UserService.createUser(user);
+            res.redirect('/users');
+        } catch (error) {
+            res.status(400).render('users/create', {
+                error: (error as Error).message || 'Failed to create user',
+                form: req.body
+            });
+        }
+    }
+
+
+
+    }
+
+
+
+    // Update user : previous
+    static async update(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const user: IUser = {
+                name: req.body.name,
+                email: req.body.email,
+                age: req.body.age,
+                class: req.body.class,
+                section: req.body.section
+            };
+            const success = await UserService.updateUser(id, user);
+            if (success) {
+                res.redirect('/users');
+            } else {
+                res.status(404).render('error', { error: 'User not found' });
+            }
+        } catch (error) {
+            res.status(500).render('error', { error: 'Failed to update user' });
+        }
+    }
+
+
+----------------------------------------
+User.ts
+
+export interface IUser {
+    id?: number;
+    name: string;
+    email: string;
+    age?: number;
+    class?:number;
+    section:string;
+    created_at?: Date;
+}
+
+
+ //4th step Start from here
+    static async create(user: IUser): Promise<number> {
+        const [result] = await db.query(
+            'INSERT INTO users (name, email, age, class, section) VALUES (?, ? , ?, ?, ?)',
+            [user.name, user.email, user.age, user.class, user.section]
+        );
+        return (result as any).insertId;
+    }
+
+-------------------------------------
+
+create.ejs
+
+
+
+<body>
+    <div class="container mt-4">
+        <h1>Create New User</h1>
+        <form action="/users" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Age</label>
+                <select name="age" class="form-select" required>
+                    <option value="">Select Age</option>
+                    <% for(let i=5; i <=18; i++) { %>
+                        <option value="<%= i %>">
+                            <%= i %>
+                        </option>
+                        <% } %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Class</label>
+                <select name="class" class="form-select" required>
+                    <option value="">Select Class</option>
+                    <% for(let i=1; i <=12; i++) { %>
+                        <option value="<%= i %>">
+                            <%= i %>
+                        </option>
+                        <% } %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Section</label>
+                <select name="section" class="form-select" required>
+                    <option value="">Select Section</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a href="/users" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>

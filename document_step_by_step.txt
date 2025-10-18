@@ -1,4 +1,108 @@
+https://claude.ai/chat/8e15e998-c2bb-49c0-83d2-80cbbf01c694
+how to add a school management project dashboard student, teacher and Admin and Root User Panel with this code and registration form 
+
+
+----------------------------------------------------------------
+
+git add .
+
+git commit -m "Initial commit"
+
+git push
+------------------------------------------------------------
+# To open the folder in VS Code using command prompt:
+------------------------------------------------------
+
+D:\node_project>code .
+
+
+If that doesn't work, you can use the full path:
+
+
+code D:\node_project
+
+# Run Command
+--------------------------------------------------------------
+npm dun dev 
+
+--------------------------------------------------------------
+http://localhost:3001/users/create
+
+http://localhost:3001/users
+---------------------------------------------------------------
+
+run command : npm run dev
+
+---------------------------------------------------------------
+
+Once running, you can access your routes at:
+
+
+GET    http://localhost:3001/users          	# List all users
+GET    http://localhost:3001/users/create   	# Show create form
+POST   http://localhost:3001/users          	# Create new user
+GET    http://localhost:3001/users/:id      	# Show specific user
+GET    http://localhost:3001/users/:id/edit 	# Show edit form
+POST   http://localhost:3001/users/:id/update 	# Update user
+POST   http://localhost:3001/users/:id/delete 	# Delete user
+----------------------------------------------------------------------
+
+Feb 25, 2025
+
+how to add business logic here standtard way and middle user
+
+https://claude.ai/chat/c2a6e695-89fe-4e6b-a22b-e8001aa9cecb
+
+-------------------------------------------------------------------------
+
+1. Create a Service Layer
+First, create a service layer to separate business logic from your controllers:
+
+2. Update Controllers to Use Service Layer
+Modify your UserController to use the service layer:
+
+3. Add Middleware
+Create a middleware directory for your middleware functions:
+
+4. Update Your Routes with Middleware
+
+5. Update Your app.ts with Global Middleware
+
+6. Create DTOs (Data Transfer Objects) for Input/Output
+
+This structure adds several standard best practices:
+
+1.Service Layer - Separates business logic from controllers
+2.Middleware - Handles cross-cutting concerns like authentication and validation
+3.DTOs - Provides clear contracts for data input/output
+4.Error Handling - Centralizes error handling and provides appropriate user feedback
+5.Validation - Ensures data integrity before it reaches your business logic
+
+This approach makes your code more maintainable, testable, and follows standard enterprise patterns while keeping a clean separation of concerns.
+
+----------------------------------------------------------------------------------------
+
+PS D:\node_project> npm install express-session
+
+PS D:\node_project> npm install @types/express-session --save-dev
+
+PS D:\node_project> npm fund 
+
+npm install express-session
+npm install @types/express-session --save-dev
+-----------------------------------------------------------------------------------
 Muhsina@DESKTOP-46GTUQO MINGW64 /d
 $ git clone https://github.com/muhsinashoma/node_project.git
 
 -----------------------------------------------------------------------------------
+
+
+https://www.youtube.com/watch?v=YLtlz88zrLg
+
+CI/CD Tutorial using GitHub Actions - Automated Testing & Automated Deployments
+
+--------------------------------------------------------------------------------------
+
+https://chatgpt.com/c/68f35564-5028-8322-ba8a-3ddac77b0276
+
+Yes ✅ — it’s absolutely possible to set up and use CI/CD pipelines and deploy your project using WSL (Windows Subsystem for Linux).

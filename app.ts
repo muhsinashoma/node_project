@@ -1,19 +1,25 @@
-
+// app.ts
 import express from 'express';
 import bodyParser from 'body-parser';
-import userRoutes from './core/routes/user.routes';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import pool from './database'; // ✅ this is where we connect the DB
 
+dotenv.config();
 
 const app = express();
-
-// Middleware
-app.set('view engine', 'ejs');
+app.use(cors());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
 
-// Routes
-app.use('/users', userRoutes);    //1st start from here
-
-//app.use('', userRoutes);    //1st start from here
+// Simple route to test DB
+app.get('/', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT NOW() AS time');
+        res.json({ status: 'ok', serverTime: rows });
+    } catch (error) {
+        res.status(500).json({ error: 'Database not connected', details: error });
+    }
+});
 
 export default app;

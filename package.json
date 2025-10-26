@@ -1,5 +1,5 @@
 {
-  "name": "node_project",
+  "name": "school_management_system",
   "version": "1.0.0",
   "scripts": {
     "start": "node dist/server.js",

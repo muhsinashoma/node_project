@@ -11,9 +11,12 @@ export class UserController {
     static async getAll(req: Request, res: Response) {
         try {
             const users = await UserService.getAllUsers();
-            res.render('users/index', { users });
+            //res.render('users/index', { users });
+            res.json(users);
         } catch (error) {
-            res.status(500).render('error', { error: 'Failed to fetch users' });
+           // res.status(500).render('error', { error: 'Failed to fetch users' });
+            res.status(500).json({ error: 'Failed to fetch users' });
+
         }
     }
 

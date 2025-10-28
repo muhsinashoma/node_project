@@ -1,0 +1,84 @@
+https://dashboard.render.com/
+
+https://dashboard.render.com/project/prj-d3pq2sqli9vc73bq6in0
+
+https://dashboard.render.com/web/srv-d3vh9v2li9vc73cr4ilg
+------------------------------------------------------------------
+https://node-project-11.onrender.com/users
+
+
+Service ID: srv-d3vh9v2li9vc73cr4ilg
+
+GitHub : muhsinashoma / node_project   master
+
+
+https://node-project-11.onrender.com/
+
+------------------------------------------------------------------------
+
+
+PS D:\node_project>
+
+PS D:\node_project> npm run build
+
+> school_management_system@1.0.0 build
+> tsc
+
+PS D:\node_project> npm start
+
+> school_management_system@1.0.0 start
+> node dist/server.js
+
+🚀 Server is running on port 3001
+✅ PostgreSQL connected successfully
+
+-----------------------------------------------------------------------
+
+
+
+PS C:\Users\Muhsina> netstat -ano | findstr :3001
+  TCP    0.0.0.0:3001           0.0.0.0:0              LISTENING       10152
+  TCP    [::]:3001              [::]:0                 LISTENING       10152
+PS C:\Users\Muhsina> taskkill /PID 10152 /F
+SUCCESS: The process with PID 10152 has been terminated.
+PS C:\Users\Muhsina>
+
+
+
+http://localhost:3001/users
+
+----------------------------------------------------------------------
+
+this is the current situation
+
+
+Web Service
+node_project-11
+Node
+Free
+Upgrade your instance
+
+Connect
+
+Manual Deploy
+Service ID:
+srv-d3vh9v2li9vc73cr4ilg
+
+muhsinashoma / node_project
+master
+https://node-project-11.onrender.com
+
+Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+Upgrade now
+
+Filter events31
+Deploy failed for b334c0f: Changed user controller to use JSON instead of render
+October 28, 2025 at 2:35 AM
+
+Rollback
+Deploy failed for 20ca62b: Fix /users route mounting
+October 27, 2025 at 10:07 PM
+
+Rollback
+First deploy started for b0dc544: Node.js app is now successfully connected to the PostgreSQL database on Render
+October 27, 2025 at 12:45 PM

@@ -1,123 +1,58 @@
-
-
-// core/controllers/UserController.ts
 import { Request, Response } from 'express';
-import { IUser } from '../models/User';
+import { IUser } from '../models/UserModel';
 import { UserService } from '../services/UserService';
 
 export class UserController {
-   
-    // Get all users : step 2
+
     static async getAll(req: Request, res: Response) {
         try {
             const users = await UserService.getAllUsers();
-            //res.render('users/index', { users });
             res.json(users);
-        } catch (error) {
-           // res.status(500).render('error', { error: 'Failed to fetch users' });
+        } catch (err) {
             res.status(500).json({ error: 'Failed to fetch users' });
-
         }
     }
 
-
-
-    // Show single user
     static async show(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
             const user = await UserService.getUserById(id);
-            if (user) {
-                res.render('users/show', { user });
-            } else {
-                res.status(404).render('error', { error: 'User not found' });
-            }
-        } catch (error) {
-            res.status(500).render('error', { error: (error as Error).message || 'Failed to fetch user' });
+            if (!user) return res.status(404).json({ error: 'User not found' });
+            res.json(user);
+        } catch (err) {
+            res.status(500).json({ error: 'Failed to fetch user' });
         }
     }
-
-
-    // Show create form
-    static createForm(req: Request, res: Response) {
-        res.render('users/create');
-    }
-
-    
-
-    // Create user :  //3rd start from here
 
     static async create(req: Request, res: Response) {
         try {
-            const user: IUser = {
-                name: req.body.name,
-                email: req.body.email,
-                age: req.body.age,
-                class: req.body.class,
-                section: req.body.section
-            };
-            await UserService.createUser(user);
-            res.redirect('/users');
-        } catch (error) {
-            res.status(400).render('users/create', {
-                error: (error as Error).message || 'Failed to create user',
-                form: req.body
-            });
+            const user: IUser = req.body;
+            const newUser = await UserService.createUser(user);
+            res.status(201).json(newUser);
+        } catch (err) {
+            res.status(400).json({ error: 'Failed to create user' });
         }
     }
 
-
-    // Show edit form : previous
-  
-    static async editForm(req: Request, res: Response) {
-        try {
-            const id = parseInt(req.params.id);
-            const user = await UserService.getUserById(id);
-            if (user) {
-                res.render('users/edit', { user });
-            } else {
-                res.status(404).render('error', { error: 'User not found' });
-            }
-        } catch (error) {
-            res.status(500).render('error', { error: 'Failed to fetch user' });
-        }
-    }
-
-
-
-    // Update user : previous
     static async update(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
-            const user: IUser = {
-                name: req.body.name,
-                email: req.body.email,
-                age: req.body.age,
-                class: req.body.class,
-                section: req.body.section
-            };
-            const success = await UserService.updateUser(id, user);
-            if (success) {
-                res.redirect('/users');
-            } else {
-                res.status(404).render('error', { error: 'User not found' });
-            }
-        } catch (error) {
-            res.status(500).render('error', { error: 'Failed to update user' });
+            const success = await UserService.updateUser(id, req.body);
+            if (!success) return res.status(404).json({ error: 'User not found' });
+            res.json({ message: 'User updated successfully' });
+        } catch (err) {
+            res.status(500).json({ error: 'Failed to update user' });
         }
     }
 
-
-    // Delete user 
     static async delete(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
-            await UserService.deleteUser(id);
-            res.redirect('/users');
-        } catch (error) {
-            res.status(500).render('error', { error: 'Failed to delete user' });
+            const success = await UserService.deleteUser(id);
+            if (!success) return res.status(404).json({ error: 'User not found' });
+            res.json({ message: 'User deleted successfully' });
+        } catch (err) {
+            res.status(500).json({ error: 'Failed to delete user' });
         }
     }
-
-
 }

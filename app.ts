@@ -5,22 +5,15 @@ import { dbConnect } from './database';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
 const app = express();
 
-// Parse JSON & URL-encoded data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Connect to DB
 dbConnect();
 
-// Mount user routes
-app.use('/users', userRoutes); // ← THIS IS CRITICAL
+app.use('/users', userRoutes);
 
-// Optional: default route
-app.get('/', (req, res) => {
-    res.send('Server is running!');
-});
+app.get('/', (req, res) => res.json({ message: 'Server is running!' }));
 
 export default app;

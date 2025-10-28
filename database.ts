@@ -3,33 +3,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-let pool: Pool;
-
-if (process.env.DATABASE_URL) {
-    // ✅ For Render or production
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false },
-    });
-} else {
-    // ✅ For local environment (.env)
-    pool = new Pool({
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASSWORD,
-        port: Number(process.env.DB_PORT) || 5432,
-        ssl: { rejectUnauthorized: false },
-    });
-}
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT) || 5432,
+    ssl: {
+        rejectUnauthorized: false  // <--- This enables SSL for Render
+    }
+});
 
 export const dbConnect = async () => {
     try {
-        const client = await pool.connect();
+        await pool.query('SELECT 1'); // test query
         console.log('✅ PostgreSQL connected successfully');
-        client.release();
     } catch (error) {
         console.error('❌ Database connection error:', error);
+        setTimeout(dbConnect, 5000); // retry in 5 seconds
     }
 };
 
